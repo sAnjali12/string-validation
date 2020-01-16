@@ -1,10 +1,13 @@
 var express = require('express');
+const path = require("path")
 var app = express();
 var bodyParser = require('body-parser')
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
 
-
-
+app.get('/valid',function(req,res){
+    res.sendFile(path.join(__dirname+'/valid.html'));
+});
 
 
 
@@ -13,19 +16,16 @@ app.post("/validation",(req,res)=>{
     var uni = "";
     var counter = 0;
     for (var i = 0; i < string.length; i++) {
-      if (input.lastIndexOf(string[i]) == string.indexOf(string[i])) {
+      if (string.lastIndexOf(string[i]) == string.indexOf(string[i])) {
         uni += string[i];
-        console.log(uni)
         counter ++;
     }
   }
-  response.then((data)=>{
-        res.json(data)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-    }).catch((err)=>{
-        res.send(err)
-    })
-    res.send(user_name)
-    
+  if(counter==0){
+    res.send("string is valid")
+  }else{
+    res.send("No")
+    }
 })
 
 const port = 2000
